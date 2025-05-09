@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz</title>
+
+    <style>
+      body {
+        font-family: sf pro text, -apple-system, BlinkMacSystemFont, Roboto,
+          segoe ui, Helvetica, Arial, sans-serif, apple color emoji,
+          segoe ui emoji, segoe ui symbol;
+        font-weight: 400;
+        line-height: 22.4px;
+        font-size: 16px;
+      }
+      p,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      ul,
+      ol {
+        font-size: 16px;
+        font-weight: 400;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        max-width: none;
+      }
+      code {
+        background-color: #fff;
+        border: 1px solid #d1d7dc;
+        color: #b4690e;
+        font-size: 90%;
+        padding: 0.2rem 0.4rem;
+      }
+      .quiz-content {
+        padding: 2.4rem;
+        word-break: break-word;
+        max-width: 86rem;
+        margin: 0 auto;
+      }
+      .quiz-container {
+        margin: 0 auto;
+        max-width: 84rem;
+        padding: 0;
+      }
+      .question {
+        margin-bottom: 5rem;
+      }
+      .question span {
+        font-size: 24px;
+        font-weight: 700;
+      }
+      .question-prompt {
+        margin-top: 0.8rem;
+        font-weight: 700;
+      }
+      .question-answer {
+        margin-top: 1.6rem;
+        padding-left: 0;
+        box-sizing: border-box;
+      }
+      .question-answer label {
+        max-width: 80rem;
+        position: relative;
+        cursor: pointer;
+        display: flex;
+        min-width: 18rem;
+        border: solid #1c1d1f 2px;
+      }
+      .question-answer div {
+        display: flex;
+        align-items: center;
+        padding: 0.5rem;
+        width: 100%;
+      }
+      .question-answer div:hover {
+        background-color: #f5f5f5;
+      }
+      .question-answer input {
+        display: none;
+      }
+      .question-answer span {
+        width: 1rem;
+        height: 1rem;
+        margin-right: 1.6rem;
+        top: 0;
+        border-radius: 50%;
+        display: inline-block;
+        flex-shrink: 0;
+        border: 0.2rem solid #1c1d1f;
+        position: relative;
+      }
+      .selected {
+        background: #1c1d1f;
+        box-shadow: 0 0 0 0.4rem #fff inset;
+      }
+      .score {
+              position: fixed;
+            }
+    </style>
+  </head>
+
+  <body onload="main()">
+    <div id="score" class="score">
+      <span>Score: N/A of N/A</span>
+    </div>
+    <div id="quiz-container" class="quiz-content"></div>
+
+    <script>
+      const quizData = {"pass_percent": 70, "questions": [{"_class": "assessment", "id": 71206008, "assessment_type": "multiple-choice", "prompt": {"question": "<p>Which access modifier is used to access members of an inherited class when two classes are in different packages?</p>", "relatedLectureIds": "", "feedbacks": ["", "", "", ""], "answers": ["<p>private</p>", "<p>default</p>", "<p>protected</p>", "<p>static</p>"]}, "correct_response": ["c"], "section": "", "question_plain": "Which access modifier is used to access members of an inherited class when two classes are in different packages?", "related_lectures": []}, {"_class": "assessment", "id": 71206018, "assessment_type": "multiple-choice", "prompt": {"question": "<p>Which principle emphasizes the binding of data and methods within a class?</p>", "relatedLectureIds": "", "feedbacks": ["", "", "", ""], "answers": ["<p>Polymorphism</p>", "<p>Encapsulation</p>", "<p>Abstraction</p>", "<p>Inheritance</p>"]}, "correct_response": ["b"], "section": "", "question_plain": "Which principle emphasizes the binding of data and methods within a class?", "related_lectures": []}, {"_class": "assessment", "id": 71206026, "assessment_type": "multiple-choice", "prompt": {"question": "<p>Can the value of a variable be changed if it is initialized with the 'final' keyword?</p>", "relatedLectureIds": "", "feedbacks": ["", ""], "answers": ["<p>Yes</p>", "<p>No</p>"]}, "correct_response": ["b"], "section": "", "question_plain": "Can the value of a variable be changed if it is initialized with the 'final' keyword?", "related_lectures": []}, {"_class": "assessment", "id": 71206030, "assessment_type": "multiple-choice", "prompt": {"question": "<p>Does the given code defines the valid way to initialize the value to the final variable?</p><p>class MyClass {</p><p>private final int myVariable;</p><p>{</p><p>myVariable = 10;</p><p>}</p><p>}</p>", "relatedLectureIds": "", "feedbacks": ["", ""], "answers": ["<p>Yes</p>", "<p>No</p>"]}, "correct_response": ["a"], "section": "", "question_plain": "Does the given code defines the valid way to initialize the value to the final variable?class MyClass {private final int myVariable;{myVariable = 10;}}", "related_lectures": []}, {"_class": "assessment", "id": 71206040, "assessment_type": "multiple-choice", "prompt": {"question": "<p>Which keyword is used to define a class member that can be accessed without reference to any object?</p>", "relatedLectureIds": "", "feedbacks": ["", "", "", ""], "answers": ["<p>final</p>", "<p>static</p>", "<p>public</p>", "<p>private</p>"]}, "correct_response": ["b"], "section": "", "question_plain": "Which keyword is used to define a class member that can be accessed without reference to any object?", "related_lectures": []}, {"_class": "assessment", "id": 71206048, "assessment_type": "multiple-choice", "prompt": {"question": "<p>Which keyword is used to achieve inheritance in Java?</p>", "relatedLectureIds": "", "feedbacks": ["", "", "", ""], "answers": ["<p>final</p>", "<p>extends</p>", "<p>this</p>", "<p>implements</p>"]}, "correct_response": ["b"], "section": "", "question_plain": "Which keyword is used to achieve inheritance in Java?", "related_lectures": []}, {"_class": "assessment", "id": 71206056, "assessment_type": "multiple-choice", "prompt": {"question": "<p>Can a class be a superclass of itself in Java?</p>", "relatedLectureIds": "", "feedbacks": ["", ""], "answers": ["<p>Yes</p>", "<p>No</p>"]}, "correct_response": ["b"], "section": "", "question_plain": "Can a class be a superclass of itself in Java?", "related_lectures": []}, {"_class": "assessment", "id": 71206058, "assessment_type": "multiple-choice", "prompt": {"question": "<p>Is method shadowing or method hiding possible with the private method?</p>", "relatedLectureIds": "", "feedbacks": ["", ""], "answers": ["<p>Yes</p>", "<p>No</p>"]}, "correct_response": ["a"], "section": "", "question_plain": "Is method shadowing or method hiding possible with the private method?", "related_lectures": []}, {"_class": "assessment", "id": 71206062, "assessment_type": "multiple-choice", "prompt": {"question": "<p>What is the return type of overridden methods?</p>", "relatedLectureIds": "", "feedbacks": ["", "", "", ""], "answers": ["<p>Covariant Return Types</p>", "<p>Different from a superclass</p>", "<p>void only</p>", "<p>Not specified</p>"]}, "correct_response": ["a"], "section": "", "question_plain": "What is the return type of overridden methods?", "related_lectures": []}, {"_class": "assessment", "id": 71206072, "assessment_type": "multiple-choice", "prompt": {"question": "<p>What interface is implemented by the String, StringBuffer, and StringBuilder classes?</p>", "relatedLectureIds": "", "feedbacks": ["", "", "", ""], "answers": ["<p>StringSequence</p>", "<p>CharSequence</p>", "<p>StringManipulator</p>", "<p>CharSequenceBuffer</p>"]}, "correct_response": ["b"], "section": "", "question_plain": "What interface is implemented by the String, StringBuffer, and StringBuilder classes?", "related_lectures": []}, {"_class": "assessment", "id": 71206078, "assessment_type": "multiple-choice", "prompt": {"question": "<p>What will be the output of the given code snippet?</p><p>char chars[] = {'a', 'b', 'c', 'd', 'e', 'f'};</p><p>String str = new String(chars,1,3);</p><p>System.out.println(str);</p>", "relatedLectureIds": "", "feedbacks": ["", "", "", ""], "answers": ["<p>['b', 'c', 'd']</p>", "<p>['b', 'c', 'd', 'e']</p>", "<p>bcd</p>", "<p>bcde</p>"]}, "correct_response": ["c"], "section": "", "question_plain": "What will be the output of the given code snippet?char chars[] = {'a', 'b', 'c', 'd', 'e', 'f'};String str = new String(chars,1,3);System.out.println(str);", "related_lectures": []}, {"_class": "assessment", "id": 71206082, "assessment_type": "multiple-choice", "prompt": {"question": "<p>Which constructor of StringBuffer reserves room for 16 characters without reallocation?</p>", "relatedLectureIds": "", "feedbacks": ["", "", "", ""], "answers": ["<p>StringBuffer( )</p>", "<p>StringBuffer(int size)</p>", "<p>StringBuffer(String str)</p>", "<p>StringBuffer(CharSequence chars)</p>"]}, "correct_response": ["a"], "section": "", "question_plain": "Which constructor of StringBuffer reserves room for 16 characters without reallocation?", "related_lectures": []}, {"_class": "assessment", "id": 71206084, "assessment_type": "multiple-choice", "prompt": {"question": "<p>Which class can be used when multiple threads are involved and thread-safety is required?</p>", "relatedLectureIds": "", "feedbacks": ["", "", "", ""], "answers": ["<p>StringBuilder</p>", "<p>StringBuffer</p>", "<p>Both can be used</p>", "<p>None of the above</p>"]}, "correct_response": ["b"], "section": "", "question_plain": "Which class can be used when multiple threads are involved and thread-safety is required?", "related_lectures": []}, {"_class": "assessment", "id": 71206170, "assessment_type": "multiple-choice", "prompt": {"question": "<p>What will be the value of the s1 and s2 variables after the execution of the following code?</p><p>class Main{</p><p>public static void main (String [] args) {</p><p>char ch [] = {'T', 'e', 'l', 'u', 's', 'k', 'o'};</p><p>String st1 = new String(ch);</p><p>String st2 = new String(st1);</p><p>System.out.println(st1);</p><p>System.out.println(st2);</p>", "relatedLectureIds": "", "feedbacks": ["", "", "", ""], "answers": ["<p>Telusko and null</p>", "<p>Telusko and st1</p>", "<p>Telusko and Telusko</p>", "<p>Telusko and ['T', 'e', 'l', 'u', 's', 'k', 'o']</p>"]}, "correct_response": ["c"], "section": "", "question_plain": "What will be the value of the s1 and s2 variables after the execution of the following code?class Main{public static void main (String [] args) {char ch [] = {'T', 'e', 'l', 'u', 's', 'k', 'o'};String st1 = new String(ch);String st2 = new String(st1);System.out.println(st1);System.out.println(st2);", "related_lectures": []}, {"_class": "assessment", "id": 71206172, "assessment_type": "multiple-choice", "prompt": {"question": "<p>Determine the capacity of the StringBuffer before and after the use of trimToSize() method in the given code:</p><p>StringBuffer sb = new StringBuffer(\"Java Code\");</p><p>System.out.println(sb.capacity());</p><p>sb.trimToSize();</p><p>System.out.println(sb.capacity());</p>", "relatedLectureIds": "", "feedbacks": ["", "", "", ""], "answers": ["<p>16 and 16</p>", "<p>16 and 9</p>", "<p>25 and 9</p>", "<p>25 and 16</p>"]}, "correct_response": ["c"], "section": "", "question_plain": "Determine the capacity of the StringBuffer before and after the use of trimToSize() method in the given code:StringBuffer sb = new StringBuffer(\"Java Code\");System.out.println(sb.capacity());sb.trimToSize();System.out.println(sb.capacity());", "related_lectures": []}, {"_class": "assessment", "id": 71206176, "assessment_type": "multiple-choice", "prompt": {"question": "<p>What Java keyword is employed for specifying a default method within a Java interface?</p>", "relatedLectureIds": "", "feedbacks": ["", "", "", ""], "answers": ["<p>new</p>", "<p>override</p>", "<p>implements</p>", "<p>default</p>"]}, "correct_response": ["d"], "section": "", "question_plain": "What Java keyword is employed for specifying a default method within a Java interface?", "related_lectures": []}, {"_class": "assessment", "id": 71206182, "assessment_type": "multiple-choice", "prompt": {"question": "<p>When implementing a Java interface, methods must possess the following access modifier:</p>", "relatedLectureIds": "", "feedbacks": ["", "", "", ""], "answers": ["<p>public</p>", "<p>abstract</p>", "<p>private</p>", "<p>protected</p>"]}, "correct_response": ["a"], "section": "", "question_plain": "When implementing a Java interface, methods must possess the following access modifier:", "related_lectures": []}, {"_class": "assessment", "id": 71206276, "assessment_type": "multiple-choice", "prompt": {"question": "<p>By default, the methods enclosed within a Java interface are characterized as:</p>", "relatedLectureIds": "", "feedbacks": ["", "", "", ""], "answers": ["<p>abstract and public</p>", "<p>private and static</p>", "<p>final and protected</p>", "<p>synchronized and void</p>"]}, "correct_response": ["a"], "section": "", "question_plain": "By default, the methods enclosed within a Java interface are characterized as:", "related_lectures": []}, {"_class": "assessment", "id": 71206280, "assessment_type": "multiple-choice", "prompt": {"question": "<p>What is the output of the following code snippet?</p><p>interface MyCode{</p><p>double myScore();</p><p>}</p><p>public class Main {</p><p>public static void main(String[] args) {</p><p>MyCode myScore;</p><p>myCode = () -&gt; 87;</p><p>System.out.println(MyCode.myScore());</p><p>}</p><p>}</p>", "relatedLectureIds": "", "feedbacks": ["", "", "", ""], "answers": ["<p>87</p>", "<p>87.0</p>", "<p>Run-time error</p>", "<p>Compile-time error</p>"]}, "correct_response": ["d"], "section": "", "question_plain": "What is the output of the following code snippet?interface MyCode{double myScore();}public class Main {public static void main(String[] args) {MyCode myScore;myCode = () -&gt; 87;System.out.println(MyCode.myScore());}}", "related_lectures": []}, {"_class": "assessment", "id": 71206284, "assessment_type": "multiple-choice", "prompt": {"question": "<p>What is the output of the code?</p><p>public class Main {</p><p>int a=5;</p><p>A obj =()-&gt;{</p><p>System.out.println(this.a);};</p><p>public static void main(String []args){</p><p>Main ob=new Main();</p><p>ob.obj.run();</p><p>}</p><p>}</p><p><br></p><p>interface A{</p><p>public void run();</p><p>}</p>", "relatedLectureIds": "", "feedbacks": ["", "", "", ""], "answers": ["<p>Compile-time error</p>", "<p>5</p>", "<p>0</p>", "<p>Run-time error</p>"]}, "correct_response": ["b"], "section": "", "question_plain": "What is the output of the code?public class Main {int a=5;A obj =()-&gt;{System.out.println(this.a);};public static void main(String []args){Main ob=new Main();ob.obj.run();}}interface A{public void run();}", "related_lectures": []}, {"_class": "assessment", "id": 71206288, "assessment_type": "multiple-choice", "prompt": {"question": "<p>Comment on the statement: \"The method defined by a lambda expression does not have a name.\"</p>", "relatedLectureIds": "", "feedbacks": ["", ""], "answers": ["<p>True</p>", "<p>False</p>"]}, "correct_response": ["a"], "section": "", "question_plain": "Comment on the statement: \"The method defined by a lambda expression does not have a name.\"", "related_lectures": []}, {"_class": "assessment", "id": 71206630, "assessment_type": "multiple-choice", "prompt": {"question": "<p>What is the output of the code?</p><p>class A{</p><p>public void run(){</p><p>System.out.println(\"I am running\");</p><p>}</p><p>}</p><p>class Outer {</p><p>static A obj=new A(){};</p><p>public static void main(String []args){</p><p>obj.run();</p><p>}</p><p>}</p>", "relatedLectureIds": "", "feedbacks": ["", "", "", ""], "answers": ["<p>Compile-time error</p>", "<p>Run-time error</p>", "<p>I am running</p>", "<p>No output</p>"]}, "correct_response": ["c"], "section": "", "question_plain": "What is the output of the code?class A{public void run(){System.out.println(\"I am running\");}}class Outer {static A obj=new A(){};public static void main(String []args){obj.run();}}", "related_lectures": []}, {"_class": "assessment", "id": 71207366, "assessment_type": "multiple-choice", "prompt": {"question": "<p>What does Inner classes promote in Java?</p>", "relatedLectureIds": "", "feedbacks": ["", "", "", ""], "answers": ["<p>Composition and aggregation</p>", "<p>Inheritance</p>", "<p>Polymorphism</p>", "<p>Abstraction</p>"]}, "correct_response": ["a"], "section": "", "question_plain": "What does Inner classes promote in Java?", "related_lectures": []}, {"_class": "assessment", "id": 71208724, "assessment_type": "multiple-choice", "prompt": {"question": "<p>How do you access the method \"m1()\" of the inner class inside the main method?</p><p>class Outer {</p><p>class Inner{</p><p>public void m1(){</p><p>System.out.println(\"inner class instance m1()\");}</p><p>}</p><p>public static void main(String[] args) { }</p><p>}</p>", "relatedLectureIds": "", "feedbacks": ["", "", "", ""], "answers": ["<p>Outer.Inner i = new Outer().Inner();</p>", "<p>Inner i = new Outer().new Inner();</p>", "<p>Outer.Inner i = new Outer().new Inner();</p>", "<p>new Outer().new Inner().m1();</p>"]}, "correct_response": ["c"], "section": "", "question_plain": "How do you access the method \"m1()\" of the inner class inside the main method?class Outer {class Inner{public void m1(){System.out.println(\"inner class instance m1()\");}}public static void main(String[] args) { }}", "related_lectures": []}, {"_class": "assessment", "id": 71209070, "assessment_type": "multiple-choice", "prompt": {"question": "<p>What is the key requirement for an interface to be considered a functional interface?</p>", "relatedLectureIds": "", "feedbacks": ["", "", "", ""], "answers": ["<p>It must define at least one abstract method</p>", "<p>It must define multiple abstract methods</p>", "<p>It must define only one abstract method</p>", "<p>It must define a method named \"run\"</p>"]}, "correct_response": ["c"], "section": "", "question_plain": "What is the key requirement for an interface to be considered a functional interface?", "related_lectures": []}, {"_class": "assessment", "id": 71209248, "assessment_type": "multiple-choice", "prompt": {"question": "<p>Which of the given expressions returns 'true' if the value of the parameter n is even?</p>", "relatedLectureIds": "", "feedbacks": ["", "", "", ""], "answers": ["<p>(n) -&gt; (n % 2) != 0</p>", "<p>(n) -&gt; (n % 2) == 0</p>", "<p>() -&gt; (n % 2) == 0</p>", "<p>(n%2) -&gt; (n) == 0</p>"]}, "correct_response": ["b"], "section": "", "question_plain": "Which of the given expressions returns 'true' if the value of the parameter n is even?", "related_lectures": []}, {"_class": "assessment", "id": 71209252, "assessment_type": "multiple-choice", "prompt": {"question": "<p>Can a subclass reference variable be assigned to a superclass reference variable?</p>", "relatedLectureIds": "", "feedbacks": ["", ""], "answers": ["<p>Yes</p>", "<p>No</p>"]}, "correct_response": ["a"], "section": "", "question_plain": "Can a subclass reference variable be assigned to a superclass reference variable?", "related_lectures": []}, {"_class": "assessment", "id": 71209258, "assessment_type": "multiple-choice", "prompt": {"question": "<p>What is the purpose of the lambda operator (-&gt;) in Java lambda expressions?</p>", "relatedLectureIds": "", "feedbacks": ["", "", "", ""], "answers": ["<p>It specifies the required parameters of an expression</p>", "<p>It converts an expression to a method with a name</p>", "<p>Divides the expression into parameter list and lambda body</p>", "<p>It indicates a constant value in an expression</p>"]}, "correct_response": ["c"], "section": "", "question_plain": "What is the purpose of the lambda operator (-&gt;) in Java lambda expressions?", "related_lectures": []}, {"_class": "assessment", "id": 71209264, "assessment_type": "multiple-choice", "prompt": {"question": "<p>In what order are the constructors executed when a class hierarchy is created?</p>", "relatedLectureIds": "", "feedbacks": ["", "", "", ""], "answers": ["<p>From subclass to superclass</p>", "<p>From superclass to subclass</p>", "<p>Any random order</p>", "<p>They do not execute in a class hierarchy</p>"]}, "correct_response": ["b"], "section": "", "question_plain": "In what order are the constructors executed when a class hierarchy is created?", "related_lectures": []}, {"_class": "assessment", "id": 71209268, "assessment_type": "multiple-choice", "prompt": {"question": "<p>Can an abstract class be instantiated directly with the new operator in Java?</p>", "relatedLectureIds": "", "feedbacks": ["", ""], "answers": ["<p>Yes</p>", "<p>No</p>"]}, "correct_response": ["b"], "section": "", "question_plain": "Can an abstract class be instantiated directly with the new operator in Java?", "related_lectures": []}]};
+      var correct = 0;
+      var total = 0;
+      const questionData = quizData.questions
+      const passPercent = quizData.pass_percent
+
+      function main() {
+        total = questionData.length;
+
+        var questions = [];
+        for (var i = 0; i < questionData.length; i++) {
+          var question = questionData[i];
+          var questionText = question.prompt.question;
+          var answers = question.prompt.answers;
+          var correctAnswer = question.correct_response[0];
+          var correctAnswerText = answers[correctAnswer.charCodeAt(0) - 97];
+          var questionObj = {
+            question: questionText,
+            correctAnswer: correctAnswerText,
+            answers: answers,
+            id: question.id,
+          };
+          questions.push(questionObj);
+        }
+
+        updateScore();
+
+        // display the questions
+        var questionsContainer = document.getElementById("quiz-container");
+        for (var i = 0; i < questions.length; i++) {
+          var question = questions[i];
+          var questionElement = document.createElement("form");
+          questionElement.className = "question";
+          questionElement.innerHTML =
+            "<span>Question " +
+            (i + 1) +
+            ":</span>" +
+            '<div class="question-prompt">' +
+            question.question +
+            "</div>";
+          questionElement.id = question.id;
+          questionElement.classList.add("quiz-container");
+          var answersElement = document.createElement("ul");
+          answersElement.className = "answers";
+          for (var j = 0; j < question.answers.length; j++) {
+            var answer = question.answers[j];
+            var answerElement = document.createElement("li");
+            answerElement.className = "answer";
+            answerElement.innerHTML =
+              '<label for="input-' +
+              question.id +
+              "-" +
+              j +
+              '"><div onclick="select(' +
+              question.id +
+              ", " +
+              j +
+              ')"><span></span><input id="input-' +
+              question.id +
+              "-" +
+              j +
+              '" type="radio" name="question' +
+              i +
+              '" value="' +
+              j +
+              '">' +
+              answer +
+              "</input></div></label>";
+            answerElement.classList.add("question-answer");
+            answersElement.appendChild(answerElement);
+          }
+
+          questionElement.appendChild(answersElement);
+
+          // add a submit button
+          var submitButton = document.createElement("button");
+          submitButton.className = "submit";
+          submitButton.innerHTML = "Submit";
+          submitButton.classList.add("submit-button");
+
+          submitButton.addEventListener("click", function (e) {
+            e.preventDefault();
+            var questionElement = e.target.parentElement;
+            var questionId = questionElement.id;
+            var question = questions.filter(function (q) {
+              return q.id == questionId;
+            })[0];
+
+            // set the border color of all answers to black
+            var answers = questionElement.getElementsByClassName("answer");
+            for (var i = 0; i < answers.length; i++) {
+              console.log(answers[i]);
+              answers[i].children[0].style.borderColor = "#1c1d1f";
+            }
+
+            var answer = questionElement.querySelector(
+              'input[type="radio"]:checked'
+            );
+            if (answer) {
+              var answerIndex = answer.value;
+              var answerText = question.answers[answerIndex];
+              if (answerText == question.correctAnswer) {
+                answer.parentElement.parentElement.style.borderColor =
+                  "limegreen";
+                // alert("Correct!");
+                correct++;
+                updateScore();
+              } else {
+                answer.parentElement.parentElement.style.borderColor = "red";
+                // alert("Incorrect!");
+              }
+            } else {
+              alert("Please select an answer.");
+            }
+          });
+
+          // add button
+          questionElement.appendChild(submitButton);
+
+          questionsContainer.appendChild(questionElement);
+        }
+      }
+
+      function select(question, answer) {
+        var questionElement = document.getElementById(question);
+        var answers = questionElement.getElementsByClassName("answer");
+        for (var i = 0; i < answers.length; i++) {
+          var span = answers[i].children[0].children[0].children[0];
+          var input = answers[i].children[0].children[0].children[1];
+          span.classList.remove("selected");
+          input.checked = false;
+        }
+        var span = answers[answer].children[0].children[0].children[0];
+        var input = answers[answer].children[0].children[0].children[1];
+        span.classList.add("selected");
+        input.checked = true;
+      }
+
+      function updateScore() {
+        var scoreElem = document.getElementById("score");
+        const score = (correct / total) * 100;
+        scoreElem.innerHTML = "Score: " + score + "/" + passPercent + "%";
+      }
+    </script>
+  </body>
+</html>
